@@ -1,0 +1,83 @@
+{
+  "name": "d3-eplusm",
+  "version": "0.0.1",
+  "description": "Exponent plus Mantissa scale for d3.",
+  "keywords": [
+    "d3",
+    "d3-module",
+    "scale",
+    "visualization",
+    "es6"
+  ],
+  "homepage": "https://github.com/jdfekete/d3-eplusm",
+  "repository": {
+    "type": "git",
+    "url": "http://github.com/jdfekete/d3-eplusm.git"
+  },
+  "module": "src/index.js",
+  "main": "src/index.js",
+  "jsdelivr": "dist/d3-eplusm.min.js",
+  "unpkg": "dist/d3-eplusm.min.js",
+  "exports": {
+    "umd": "./dist/d3-eplusm.min.js",
+    "default": "./src/index.js"
+  },
+  "author": [
+    {
+      "name": "Jean-Daniel Fekete",
+      "url": "https://www.aviz.fr/~fekete"
+    }
+  ],
+  "scripts": {
+    "build": "rollup -c",
+    "pretest": "npm run build",
+    "test": "TZ=America/Los_Angeles mocha 'test/**/*-test.js' && eslint src",
+    "cover": "nyc --silent vows --nocolor",
+    "cover:report": "nyc report --reporter=lcov --reporter=text",
+    "clean": "rm -rf node_modules dist",
+    "prettier": "prettier --write '{src,test}/**/*.js'",
+    "docs": "jsdoc -c jsdoc.config.json",
+    "check": "jshint src/*.js test/*.js"
+  },
+  "type": "module",
+  "files": [
+    "dist/**/*.js",
+    "src/**/*.js"
+  ],
+  "dependencies": {
+    "d3-array": "2.10.0 - 3",
+    "d3-format": "1 - 3",
+    "d3-scale": "^4.0.0"
+  },
+  "devDependencies": {
+    "@eslint/eslintrc": "^3.3.1",
+    "@eslint/js": "^9.28.0",
+    "@rollup/plugin-terser": "*",
+    "d3-color": "1 - 3",
+    "d3-interpolate": "1.2.0 - 3",
+    "eslint": "*",
+    "globals": "^16.2.0",
+    "jshint": "*",
+    "jsonfile": "*",
+    "mocha": "11",
+    "nyc": "*",
+    "parse-path": "*",
+    "prettier": "*",
+    "rollup": "2"
+  },
+  "license": "MIT",
+  "jshintConfig": {
+    "esversion": 6,
+    "node": true,
+    "laxbreak": true,
+    "varstmt": true,
+    "undef": true,
+    "unused": true,
+    "globals": {
+      "console": false
+    }
+  },
+  "prettier": {
+    "singleQuote": true
+  }
+}

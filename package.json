@@ -32,8 +32,6 @@
     "build": "rollup -c",
     "pretest": "npm run build",
     "test": "TZ=America/Los_Angeles mocha 'test/**/*-test.js' && eslint src",
-    "cover": "nyc --silent vows --nocolor",
-    "cover:report": "nyc report --reporter=lcov --reporter=text",
     "clean": "rm -rf node_modules dist",
     "prettier": "prettier --write '{src,test}/**/*.js'",
     "docs": "jsdoc -c jsdoc.config.json",
@@ -60,7 +58,6 @@
     "jshint": "*",
     "jsonfile": "*",
     "mocha": "11",
-    "nyc": "*",
     "parse-path": "*",
     "prettier": "*",
     "rollup": "2"
@@ -76,6 +73,9 @@
     "globals": {
       "console": false
     }
+  },
+  "engines": {
+    "node": ">=12"
   },
   "prettier": {
     "singleQuote": true

@@ -1,11 +1,8 @@
 import { ticks } from 'd3-array';
 import { format, formatSpecifier } from 'd3-format';
-import { nice } from './imported.js';
-import { copy, transformer } from './imported.js';
-import { initRange } from './imported.js';
-// import nice from "./nice.js";
-// import {copy, transformer} from "./continuous.js";
-// import {initRange} from "./init.js";
+import nice from './nice.js';
+import { copy, transformer } from './continuous.js';
+import { initRange } from './init.js';
 
 /*
 const float = new Float64Array(1),
@@ -58,6 +55,14 @@ function transformLin(x) {
   return lin;
 }
 
+function transformEpluMn(x) {
+  return -transformEpluM(-x);
+}
+
+function transformLinn(x) {
+  return -transformLin(-x);
+}
+
 function reflect(f) {
   return (x, k) => -f(-x, k);
 }
@@ -74,8 +79,10 @@ export function eplusm(transform) {
     (logs = transformEpluM), (pows = pow10), (invs = transformLin);
     if (domain()[0] < 0) {
       (logs = reflect(logs)), (pows = reflect(pows)), (invs = reflect(invs));
+      transform(transformEpluMn, transformLinn);
+    } else {
+      transform(transformEpluM, transformLin);
     }
-    transform(transformEpluM, transformLin);
     return scale;
   }
 

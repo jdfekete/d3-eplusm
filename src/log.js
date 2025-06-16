@@ -1,11 +1,8 @@
-import { ticks } from 'd3-array';
-import { format, formatSpecifier } from 'd3-format';
-import { nice } from './imported.js';
-import { copy, transformer } from './imported.js';
-import { initRange } from './imported.js';
-// import nice from "./nice.js";
-// import {copy, transformer} from "./continuous.js";
-// import {initRange} from "./init.js";
+import {ticks} from "d3-array";
+import {format, formatSpecifier} from "d3-format";
+import nice from "./nice.js";
+import {copy, transformer} from "./continuous.js";
+import {initRange} from "./init.js";
 
 function transformLog(x) {
   return Math.log(x);

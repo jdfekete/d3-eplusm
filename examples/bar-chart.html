@@ -80,8 +80,7 @@
     .padding(0.4);
 
   // Declare the y (vertical position) scale.
-  const y = d3
-    .scaleLog()
+  const y = scaleEplusM()
     .domain([1, 10 ** (maxExponent + 1)])
     .range([height - marginBottom, marginTop]);
 
@@ -94,7 +93,7 @@
     .attr('style', 'max-width: 100%; height: auto;');
 
   // Remove existing elements to avoid duplication
-  svg.selectAll('*').remove();
+  // svg.selectAll('*').remove();
 
   // Add background rectangles for each exponent group
   for (let exp = 0; exp <= maxExponent; exp++) {

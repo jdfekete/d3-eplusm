@@ -29,7 +29,7 @@
     "test": "TZ=America/Los_Angeles mocha 'test/**/*-test.js' && eslint src",
     "clean": "rm -rf node_modules dist",
     "prettier": "prettier --write '{src,test}/**/*.js'",
-    "start": "web-dev-server --node-resolve --open examples/ticks.html --watch"
+    "start": "web-dev-server --node-resolve --open examples/index.html --watch"
   },
   "type": "module",
   "files": [

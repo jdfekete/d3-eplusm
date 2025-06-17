@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<title>Bar Chart using the EplusM scale</title>
+<div id="container"></div>
+<script type="module">
+
+import * as d3 from "https://cdn.jsdelivr.net/npm/d3@7/+esm";
+import { scaleEplusM } from 'd3-eplusm';
+
+const data = await d3.csv("data/omvs-sample.csv");
+
+// Declare the chart dimensions and margins.
+const width = 700;
+const height = 700;
+const marginTop = 10;
+const marginRight = 70;
+const marginBottom = 70;
+const marginLeft = 70;
+const maxExponent = Math.floor(Math.log10(d3.max(data, d => parseFloat(d.Amount))));
+const evenBackgroundColor = "#ffffff";  // Background color for even exponents
+const oddBackgroundColor = "#f0f0f0";  // Background color for odd exponents
+const barColor = "rgb(20, 22, 76)"
+
+// Custom tick values for the y-axis
+const logTicks = [];
+for (let exp = 0; exp <= maxExponent; exp++) {
+for (let m = 1; m < 10; m++){
+  logTicks.push(m * Math.pow(10, exp));
+}
+}
+
+const scaleY = (value) => {
+let num, unit;
+if(value >= 1000 && value <1000000){
+  num = parseInt(value/1000)
+  unit = "k"
+} else if (value >= 1000000 && value <1000000000){
+  num = parseInt(value/1000000)
+  unit = "M"
+} else if (value >= 1000000000 && value <1000000000000){
+  num = parseInt(value/1000000000)
+  unit = "B"
+} else if (value >= 1000000000000 && value <1000000000000000){
+  num = parseInt(value/1000000000000)
+  unit = "T"
+} else {
+  num = value;
+  unit = "";
+}
+return num + unit;
+}
+
+
+const displayTicks = [];
+for (let exp = 0; exp <= maxExponent; exp++) {
+    displayTicks.push(1 * Math.pow(10, exp));
+    displayTicks.push(5 * Math.pow(10, exp));
+}
+
+const strongTicks = [];
+for (let exp = 0; exp <= maxExponent + 1; exp++) {
+    strongTicks.push(1 * Math.pow(10, exp));
+}
+
+const lightTicks = [];
+for (let exp = 0; exp <= maxExponent; exp++) {
+    lightTicks.push(5 * Math.pow(10, exp));
+}
+
+const horizontalLines = [];
+for (let exp = 0; exp <= maxExponent; exp++) {
+    horizontalLines.push(5 * Math.pow(10, exp));   
+}
+
+// Declare the x (horizontal position) scale.
+const x = d3.scaleBand()
+.domain(data.map(d => d.Letter))
+.range([marginLeft, width - marginRight])
+.padding(0.4);
+
+// Declare the y (vertical position) scale.
+const y = d3.scaleLog()
+.domain([1, 10**(maxExponent+1)])
+.range([height - marginBottom, marginTop]);
+
+  // Create the SVG container.
+const svg = d3.create("svg")
+  .attr("width", width)
+  .attr("height", height)
+  .attr("viewBox", [0, 0, width, height])
+  .attr("style", "max-width: 100%; height: auto;");
+
+// Remove existing elements to avoid duplication
+svg.selectAll('*').remove();
+
+// Add background rectangles for each exponent group
+for (let exp = 0; exp <= maxExponent; exp++) {
+    svg.append("rect")
+        .attr("x", marginLeft)
+        .attr("y", y(10**(exp + 1)))  // top of the exponent range
+        .attr("width", width - marginLeft - marginRight)
+        .attr("height", y(10**exp) - y(10**(exp + 1)))  // height of the exponent range
+        .attr("fill", exp % 2 === 0 ? evenBackgroundColor : oddBackgroundColor);
+}
+
+// Add horizontal grid lines - thick
+svg.append("g")
+.attr("class", "grid-strong")
+.attr("transform", `translate(${marginLeft},0)`)
+.call(d3.axisLeft(y)
+    .tickValues(strongTicks)
+    .tickSize(-width + marginLeft + marginRight)
+    .tickFormat('')
+).call(g => g.select(".domain").remove()); // This line removes the vertical domain line of the grid
+
+// Add horizontal grid lines - thin
+svg.append("g")
+.attr("class", "grid")
+.attr("transform", `translate(${marginLeft},0)`)
+.call(d3.axisLeft(y)
+    .tickValues(horizontalLines)
+    .tickSize(-width + marginLeft + marginRight)
+    .tickFormat('')
+).call(g => g.select(".domain").remove()); // This line removes the vertical domain line of the grid
+
+// Add the x-axis and label.
+const xAxis = svg.append("g")
+.attr("transform", `translate(0,${height - marginBottom})`)
+.call(d3.axisBottom(x).tickSizeOuter(0))
+  .selectAll(".tick text")
+  .classed("strongText", true)
+
+// Strong ticks left.
+svg.append("g")
+.attr("transform",  `translate(${marginLeft},0)`)
+.call(d3.axisLeft(y).tickValues(strongTicks).tickFormat(d=> scaleY(d)).tickSize(4))
+    .selectAll(".tick text")
+    .classed("strongText", true)
+.call(g => g.select(".domain").remove())
+
+// Light ticks left.
+svg.append("g")
+.attr("transform",`translate(${marginLeft},0)`)
+.call(d3.axisLeft(y).tickValues(lightTicks).tickFormat(d=> scaleY(d)).tickSize(4))
+    .selectAll(".tick text")
+    .classed("lightText", true)
+.call(g => g.select(".domain").remove())
+
+// Strong ticks right.
+svg.append("g")
+.attr("transform", `translate(${width - marginRight},0)`)
+.call(d3.axisRight(y).tickValues(strongTicks).tickFormat(d=> scaleY(d)).tickSize(4))
+    .selectAll(".tick text")
+    .classed("strongText", true)
+.call(g => g.select(".domain").remove())
+
+// Light ticks right.
+svg.append("g")
+.attr("transform", `translate(${width - marginRight},0)`)
+.call(d3.axisRight(y).tickValues(lightTicks).tickFormat(d=> scaleY(d)).tickSize(4))
+    .selectAll(".tick text")
+    .classed("lightText", true)
+.call(g => g.select(".domain").remove())
+
+  // Add a rect for each bar.
+svg.append("g")
+    .attr("fill", barColor)
+    .selectAll()
+    .data(data)
+    .join("rect")
+    .attr("x", (d) => x(d.Letter))
+    .attr("y", (d) => y(d.Amount))
+    .attr("height", (d) => y(1) - y(d.Amount))
+    .attr("width", x.bandwidth());
+
+svg.append("text")
+    .attr("x", marginLeft)
+    .attr("y", marginTop - 15)
+    .attr("text-anchor", "end")
+    .text("Value")
+    .style("font-size", "14px");
+
+// Ticks without text and left axis.
+svg.append("g")
+  .attr("transform", `translate(${marginLeft},0)`)
+  .call(d3.axisLeft(y).tickValues(logTicks).tickFormat('').tickSize(4))
+
+// Ticks without text and right axis.
+svg.append("g")
+  .attr("transform", `translate(${width - marginRight},0)`)
+  .call(d3.axisRight(y).tickValues(logTicks).tickFormat('').tickSize(4))
+
+
+// Append the SVG element.
+container.append(svg.node());
+
+
+</script>

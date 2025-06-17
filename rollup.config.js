@@ -1,4 +1,5 @@
 import terser from "@rollup/plugin-terser";
+import dsv from '@rollup/plugin-dsv';
 import * as meta from "./package.json";
 
 const config = {
@@ -23,6 +24,7 @@ export default [
     },
     plugins: [
       ...config.plugins,
+      dsv(),
       terser({
         output: {
           preamble: config.output.banner

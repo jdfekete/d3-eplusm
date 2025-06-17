@@ -94,6 +94,26 @@ export function eplusm(transform) {
     return arguments.length ? (domain(_), rescale()) : domain();
   };
 
+  scale.defaultTicks = function() {
+    const d = domain();
+    let u = d[0];
+    let v = d[d.length - 1];
+    const r = v < u;
+
+    if (r) [u, v] = [v, u];
+
+    let i = pow10(Math.floor(Math.log10(u)));
+    let j = pow10(Math.floor(Math.log10(v)));
+
+    let ticks = [];
+    while (i < j) {
+      ticks.push(i);
+      ticks.push(i * 5);
+      i *= 10;
+    }
+    return ticks;
+  };
+
   scale.ticks = (count) => {
     const d = domain();
     let u = d[0];

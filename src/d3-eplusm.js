@@ -36,22 +36,22 @@ function roundat(x, prec) {
 
 function transformEpluM(x) {
   if (x === 0) {
-    console.log(`transformEpluM(${x}) = 0`);
+    //console.log(`transformEpluM(${x}) = 0`);
     return 0;
   }
   const exponent = Math.trunc(Math.log10(x)),
-        mantissa = x / pow10(exponent);
-  const eplusm = exponent + (mantissa - 1)/9;
-  console.log(`transformEpluM(${x}) = ${eplusm}`);
+    mantissa = x / pow10(exponent);
+  const eplusm = exponent + (mantissa - 1) / 9;
+  //console.log(`transformEpluM(${x}) = ${eplusm}`);
   return eplusm;
 }
 
 function transformLin(x) {
   if (x === 0) return 0;
   const exponent = Math.trunc(x),
-        mantissa = (x - exponent) * 9 + 1;
+    mantissa = (x - exponent) * 9 + 1;
   const lin = roundat(mantissa * pow10(exponent), 5);
-  console.log(`transformLin(${x}) = ${lin}`);
+  //console.log(`transformLin(${x}) = ${lin}`);
   return lin;
 }
 
@@ -86,15 +86,15 @@ export function eplusm(transform) {
     return scale;
   }
 
-  scale.base = function(_) {
-    return arguments.length ? (base = +_, rescale()) : base;
+  scale.base = function (_) {
+    return arguments.length ? ((base = +_), rescale()) : base;
   };
 
   scale.domain = function (_) {
     return arguments.length ? (domain(_), rescale()) : domain();
   };
 
-  scale.defaultTicks = function() {
+  scale.defaultTicks = function () {
     const d = domain();
     let u = d[0];
     let v = d[d.length - 1];

@@ -1,1 +1,2 @@
-Implementation of the EpluM scale for 3d
+Implementation of the EpluM scale for d3.
+

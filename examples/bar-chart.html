@@ -2,6 +2,49 @@
 <meta charset="utf-8" />
 <title>Bar Chart using the EplusM scale</title>
 <div id="container"></div>
+<style type="text/css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@500&family=Manrope:wght@200..800&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Rubik:ital,wght@0,300..900;1,300..900&display=swap" rel="stylesheet">
+
+  body, svg {
+        font-family: 'Rubik', serif;
+  }
+
+  .grid {
+    color: black;
+    opacity: 0.5;
+    stroke-width: 0.5px;
+  }
+
+    .grid-strong {
+    color: rgb(20, 22, 76);
+    stroke-width: 1px;
+  }
+
+    .strongText {
+      font-size: 16px;
+      font-weight: bold;
+      color: rgb(20, 22, 76);
+    }
+
+  .strongSSBText {
+     font-size: 16px;
+     font-weight: bold;
+  }
+
+    .lightText {
+      font-size: 16px;
+      color: grey;
+    }
+
+      .dashed-line {
+      stroke: grey;
+      stroke-width: 2;
+      stroke-dasharray: 4;
+    }
+
+</style>
 <script type="module">
   import * as d3 from 'https://cdn.jsdelivr.net/npm/d3@7/+esm';
   import { scaleEplusM } from 'd3-eplusm';
@@ -21,14 +64,6 @@
   const evenBackgroundColor = '#ffffff'; // Background color for even exponents
   const oddBackgroundColor = '#f0f0f0'; // Background color for odd exponents
   const barColor = 'rgb(20, 22, 76)';
-
-  // Custom tick values for the y-axis
-  const logTicks = [];
-  for (let exp = 0; exp <= maxExponent; exp++) {
-    for (let m = 1; m < 10; m++) {
-      logTicks.push(m * Math.pow(10, exp));
-    }
-  }
 
   const scaleY = (value) => {
     let num, unit;
@@ -51,26 +86,6 @@
     return num + unit;
   };
 
-  const displayTicks = [];
-  for (let exp = 0; exp <= maxExponent; exp++) {
-    displayTicks.push(1 * Math.pow(10, exp));
-    displayTicks.push(5 * Math.pow(10, exp));
-  }
-
-  const strongTicks = [];
-  for (let exp = 0; exp <= maxExponent + 1; exp++) {
-    strongTicks.push(1 * Math.pow(10, exp));
-  }
-
-  const lightTicks = [];
-  for (let exp = 0; exp <= maxExponent; exp++) {
-    lightTicks.push(5 * Math.pow(10, exp));
-  }
-
-  const horizontalLines = [];
-  for (let exp = 0; exp <= maxExponent; exp++) {
-    horizontalLines.push(5 * Math.pow(10, exp));
-  }
 
   // Declare the x (horizontal position) scale.
   const x = d3
@@ -83,6 +98,22 @@
   const y = scaleEplusM()
     .domain([1, 10 ** (maxExponent + 1)])
     .range([height - marginBottom, marginTop]);
+
+  // Custom tick values for the y-axis
+  const logTicks = y.defaultTicks(10);
+  const displayTicks = y.defaultTicks(2);
+  const strongTicks = y.defaultTicks(1);
+
+  const lightTicks = y.defaultTicks([5]);
+  // for (let exp = 0; exp <= maxExponent; exp++) {
+  //   lightTicks.push(5 * Math.pow(10, exp));
+  // }
+
+  const horizontalLines = lightTicks;
+  // for (let exp = 0; exp <= maxExponent; exp++) {
+  //   horizontalLines.push(5 * Math.pow(10, exp));
+  // }
+
 
   // Create the SVG container.
   const svg = d3

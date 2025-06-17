@@ -39,8 +39,7 @@
     .append('g')
     .attr('transform', `translate(0,${height - marginBottom})`)
     .call(
-      d3
-        .axisBottom(x1)
+      d3.axisBottom(x1)
         .tickValues(logTicks),
     )
     .selectAll('text')
@@ -55,7 +54,8 @@
     .append('g')
     .attr('transform', `translate(0,${height - 3 * marginBottom})`)
     .call(
-      d3.axisBottom(x2).tickValues(logTicks),
+      d3.axisBottom(x2)
+        .tickValues(logTicks),
     )
     .selectAll('text')
     .style('text-anchor', 'end')

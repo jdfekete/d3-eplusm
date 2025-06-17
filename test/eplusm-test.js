@@ -50,16 +50,6 @@ it('eplusm.domain(…) can take negative values', () => {
   assertInDelta(x(-50), 0.277777, 1e-3);
 });
 
-
-/*
-it('eplusm.domain(…).range(…) can take more than two values', () => {
-  const x = scaleEplusM().domain([0.1, 1, 100]).range(['red', 'white', 'green']);
-  assert.strictEqual(x(0.5), 'rgb(255, 178, 178)');
-  assert.strictEqual(x(50), 'rgb(38, 147, 38)');
-  assert.strictEqual(x(75), 'rgb(16, 136, 16)');
-});
-*/
-
 it('eplusm.domain(…) preserves specified domain exactly, with no floating point error', () => {
   const x = scaleEplusM().domain([0.1, 1000]);
   assert.deepStrictEqual(x.domain(), [0.1, 1000]);
@@ -89,37 +79,6 @@ it('eplusm.range(…) does not coerce values to numbers', () => {
   assert.strictEqual(typeof x.range()[0], 'string');
   assert.strictEqual(typeof x.range()[1], 'string');
 });
-/*
-
-it('eplusm.range(…) can take colors', () => {
-  const x = scaleEplusM().range(['red', 'blue']);
-  assert.strictEqual(x(5), 'rgb(77, 0, 178)');
-  x.range(['#ff0000', '#0000ff']);
-  assert.strictEqual(x(5), 'rgb(77, 0, 178)');
-  x.range(['#f00', '#00f']);
-  assert.strictEqual(x(5), 'rgb(77, 0, 178)');
-  x.range([rgb(255, 0, 0), hsl(240, 1, 0.5)]);
-  assert.strictEqual(x(5), 'rgb(77, 0, 178)');
-  x.range(['hsl(0,100%,50%)', 'hsl(240,100%,50%)']);
-  assert.strictEqual(x(5), 'rgb(77, 0, 178)');
-});
-
-it('eplusm.range(…) can take arrays or objects', () => {
-  const x = scaleEplusM().range([{ color: 'red' }, { color: 'blue' }]);
-  assert.deepStrictEqual(x(5), { color: 'rgb(77, 0, 178)' });
-  x.range([['red'], ['blue']]);
-  assert.deepStrictEqual(x(5), ['rgb(77, 0, 178)']);
-});
-
-it('log.interpolate(f) sets the interpolator', () => {
-  const x = scaleEplusM().range(['red', 'blue']);
-  assert.strictEqual(x.interpolate(), interpolate);
-  assert.strictEqual(x(5), 'rgb(77, 0, 178)');
-  x.interpolate(interpolateHsl);
-  assert.strictEqual(x(5), 'rgb(154, 0, 255)');
-});
-
-*/
 
 it('eplusm(x) does not clamp by default', () => {
   const x = scaleEplusM();

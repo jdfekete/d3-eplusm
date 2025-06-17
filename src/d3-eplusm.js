@@ -94,7 +94,7 @@ export function eplusm(transform) {
     return arguments.length ? (domain(_), rescale()) : domain();
   };
 
-  scale.defaultTicks = function () {
+  scale.defaultTicks = function (order) {
     const d = domain();
     let u = d[0];
     let v = d[d.length - 1];
@@ -105,11 +105,16 @@ export function eplusm(transform) {
     let i = pow10(Math.floor(Math.log10(u)));
     let j = pow10(Math.floor(Math.log10(v)));
 
+    const default_order = [1, 5, 7, 3, 9, 2, 6, 4, 8];
+    let n = order == null ? [1, 5] :
+        Number.isInteger(order) ? default_order.slice(0, order) : order;
     let ticks = [];
-    while (i < j) {
-      ticks.push(i);
-      ticks.push(i * 5);
-      i *= 10;
+    for (let k of n) {
+      let i = pow10(Math.floor(Math.log10(u)));
+      while (i <= j) {
+        ticks.push(i * k);
+        i *= 10;
+      }
     }
     return ticks;
   };

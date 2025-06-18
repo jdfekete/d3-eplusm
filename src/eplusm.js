@@ -102,7 +102,7 @@ export function eplusm(transform) {
 
     if (r) [u, v] = [v, u];
 
-    let i = pow10(Math.floor(Math.log10(u)));
+    //let i = pow10(Math.floor(Math.log10(u)));
     let j = pow10(Math.floor(Math.log10(v)));
 
     const default_order = [1, 5, 7, 3, 9, 2, 6, 4, 8];

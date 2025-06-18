@@ -1,3 +1,4 @@
+// https://d3js.org/d3-scale/ v4.0.2 Copyright 2010-2021 Mike Bostock
 export function initRange(domain, range) {
   switch (arguments.length) {
     case 0: break;

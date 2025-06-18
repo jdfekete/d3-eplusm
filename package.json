@@ -22,7 +22,16 @@
     "umd": "./dist/d3-eplusm.min.js",
     "default": "./src/index.js"
   },
-  "author": "Jean-Daniel Fekete",
+  "author": {
+    "name": "Jean-Daniel Fekete",
+    "url": "https://www.aviz.fr/~fekete"
+  },
+  "contributors": [
+    {
+      "name": "Katerina Batziakoudi",
+      "url": "https://batziakoudi.com/"
+    }
+  ]
   "scripts": {
     "build": "rollup -c",
     "pretest": "yarn build",

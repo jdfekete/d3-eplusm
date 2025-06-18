@@ -1,3 +1,4 @@
+// https://d3js.org/d3-scale/ v4.0.2 Copyright 2010-2021 Mike Bostock
 import {bisect} from "d3-array";
 import {interpolate as interpolateValue, interpolateNumber, interpolateRound} from "d3-interpolate";
 import constant from "./constant.js";

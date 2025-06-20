@@ -96,15 +96,15 @@
 
   // Declare the y (vertical position) scale.
   const y = scaleEplusM()
-    .domain([1, 10 ** (maxExponent + 1)])
+        .domain([1, 10 ** (maxExponent + 1)])
     .range([height - marginBottom, marginTop]);
 
   // Custom tick values for the y-axis
-  const logTicks = y.defaultTicks(10);
-  const displayTicks = y.defaultTicks(2);
-  const strongTicks = y.defaultTicks(1);
+  const logTicks = y.goodTicks(10);
+  const displayTicks = y.goodTicks(2);
+  const strongTicks = y.goodTicks(1);
 
-  const lightTicks = y.defaultTicks([5]);
+  const lightTicks = y.goodTicks([5]);
   // for (let exp = 0; exp <= maxExponent; exp++) {
   //   lightTicks.push(5 * Math.pow(10, exp));
   // }

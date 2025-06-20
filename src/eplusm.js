@@ -4,26 +4,7 @@ import nice from './nice.js';
 import { copy, transformer } from './continuous.js';
 import { initRange } from './init.js';
 
-/*
-const float = new Float64Array(1),
-  bytes = new Uint8Array(float.buffer);
-
-function decomposeEM(x) {
-  float[0] = Number(x);
-
-  const sign = bytes[7] >> 7,
-    exponent = (((bytes[7] & 0x7f) << 4) | (bytes[6] >> 4)) - 0x3ff;
-
-  bytes[7] = 0x3f;
-  bytes[6] |= 0xf0;
-
-  return {
-    sign: sign,
-    exponent: exponent,
-    mantissa: float[0],
-  };
-}
-*/
+const tick_order = [1, 5, 7, 3, 9, 2, 6, 4, 8];
 
 function pow10(x) {
   return isFinite(x) ? +('1e' + x) : x < 0 ? 0 : x;
@@ -94,7 +75,7 @@ export function eplusm(transform) {
     return arguments.length ? (domain(_), rescale()) : domain();
   };
 
-  scale.defaultTicks = function (order) {
+  scale.goodTicks = function (order) {
     const d = domain();
     let u = d[0];
     let v = d[d.length - 1];
@@ -105,9 +86,12 @@ export function eplusm(transform) {
     //let i = pow10(Math.floor(Math.log10(u)));
     let j = pow10(Math.floor(Math.log10(v)));
 
-    const default_order = [1, 5, 7, 3, 9, 2, 6, 4, 8];
-    let n = order == null ? [1, 5] :
-        Number.isInteger(order) ? default_order.slice(0, order) : order;
+    let n =
+      order == null
+        ? [1, 5]
+        : Number.isInteger(order)
+          ? tick_order.slice(0, order)
+          : order;
     let ticks = [];
     for (let k of n) {
       let i = pow10(Math.floor(Math.log10(u)));
@@ -174,10 +158,12 @@ export function eplusm(transform) {
     }
     if (count === Infinity) return specifier;
     const k = Math.max(1, (base * count) / scale.ticks().length); // TODO fast estimate?
+    const visible = new Set(tick_order.slice(0, k));
     return (d) => {
       let i = d / pows(Math.round(logs(d)));
       if (i * base < base - 0.5) i *= base;
-      return i <= k ? specifier(d) : '';
+      i = Math.trunc(i);
+      return visible.has(i) ? specifier(d) : '';
     };
   };
 

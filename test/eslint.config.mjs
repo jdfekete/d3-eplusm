@@ -1,5 +1,4 @@
 import { defineConfig } from "eslint/config";
-import globals from "globals";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import js from "@eslint/js";

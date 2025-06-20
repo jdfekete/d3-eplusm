@@ -1,9 +1,8 @@
 /* eslint-env mocha */
 
 import assert from 'assert';
-import { hsl, rgb } from 'd3-color';
-import { interpolate, interpolateHsl } from 'd3-interpolate';
-import { format } from 'd3-format';
+import { interpolate } from 'd3-interpolate';
+// import { format } from 'd3-format';
 import { scaleEplusM } from '../src/index.js';
 import { assertInDelta } from './asserts.js';
 

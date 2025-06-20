@@ -15,15 +15,16 @@
   const marginLeft = 40;
 
   // Declare the x (horizontal position) scale.
-  const x1 = scaleEplusM()
-    .domain([1, 1e10])
+  const xEplusM = scaleEplusM()
+    .domain([1, 1e6])
     .range([marginLeft, width - marginRight]);
 
-  const logTicks = x1.defaultTicks();
+  // Can generate ticks like this
+  // const logTicks = x1.goodTicks();
 
-  const x2 = d3
+  const xLog = d3
     .scaleLog()
-    .domain([1, 1e10])
+    .domain([1, 1e6])
     .range([marginLeft, width - marginRight]);
 
   // Create the SVG container.
@@ -33,10 +34,7 @@
   svg
     .append('g')
     .attr('transform', `translate(0,${height - marginBottom})`)
-    .call(
-      d3.axisBottom(x1)
-        .tickValues(logTicks),
-    )
+  .call(d3.axisBottom(xEplusM).ticks(15, "s"))
     .selectAll('text')
     .style('text-anchor', 'end')
     .attr('dx', '-.8em')
@@ -48,10 +46,7 @@
   svg
     .append('g')
     .attr('transform', `translate(0,${height - 3 * marginBottom})`)
-    .call(
-      d3.axisBottom(x2)
-        .tickValues(logTicks),
-    )
+    .call(d3.axisBottom(xLog))
     .selectAll('text')
     .style('text-anchor', 'end')
     .attr('dx', '-.8em')

@@ -34,7 +34,7 @@
   "scripts": {
     "build": "rollup -c",
     "pretest": "yarn build",
-    "test": "TZ=America/Los_Angeles mocha 'test/**/*-test.js' && eslint src",
+    "test": "TZ=America/Los_Angeles mocha 'test/**/*-test.js' && eslint src test",
     "clean": "rm -rf node_modules dist",
     "prettier": "prettier --write '{src,test}/**/*.js'",
     "start": "web-dev-server --node-resolve --open examples/index.html --watch"
@@ -59,10 +59,11 @@
     "d3-interpolate": "1.2.0 - 3",
     "eslint": "*",
     "globals": "^16.2.0",
+    "husky": "^9.1.7",
     "jsonfile": "*",
     "mocha": "11",
     "parse-path": "*",
-    "prettier": "*",
+    "prettier": "^3.5.3",
     "rollup": "2"
   },
   "license": "MIT",

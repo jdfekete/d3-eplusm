@@ -22,5 +22,5 @@ const x1 = scaleEplusM()
 ```
 
 It provides the usual methods, such as `ticks()` and `nice()`.
-In addition, you can also specify the number of tick values you want using the `defaultTicks()` method.
-It takes either a number of tick labels to show, between 1 and 9, or an array of tick units to show, such as `defaultTicks([1, 5])` (equivalent to `defaultTicks(2)` or simply `defaultTicks`
+In addition, you can also specify the number of tick values you want using the `goodTicks()` method.
+It takes either a number of tick labels to show, between 1 and 9, or an array of tick units to show, such as `goodTicks([1, 5])` (equivalent to `goodTicks(2)` or simply `goodTicks`

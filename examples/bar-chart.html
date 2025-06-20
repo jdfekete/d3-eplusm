@@ -65,28 +65,6 @@
   const oddBackgroundColor = '#f0f0f0'; // Background color for odd exponents
   const barColor = 'rgb(20, 22, 76)';
 
-  const scaleY = (value) => {
-    let num, unit;
-    if (value >= 1000 && value < 1000000) {
-      num = parseInt(value / 1000);
-      unit = 'k';
-    } else if (value >= 1000000 && value < 1000000000) {
-      num = parseInt(value / 1000000);
-      unit = 'M';
-    } else if (value >= 1000000000 && value < 1000000000000) {
-      num = parseInt(value / 1000000000);
-      unit = 'B';
-    } else if (value >= 1000000000000 && value < 1000000000000000) {
-      num = parseInt(value / 1000000000000);
-      unit = 'T';
-    } else {
-      num = value;
-      unit = '';
-    }
-    return num + unit;
-  };
-
-
   // Declare the x (horizontal position) scale.
   const x = d3
     .scaleBand()
@@ -101,18 +79,9 @@
 
   // Custom tick values for the y-axis
   const logTicks = y.goodTicks(10);
-  const displayTicks = y.goodTicks(2);
   const strongTicks = y.goodTicks(1);
-
   const lightTicks = y.goodTicks([5]);
-  // for (let exp = 0; exp <= maxExponent; exp++) {
-  //   lightTicks.push(5 * Math.pow(10, exp));
-  // }
-
   const horizontalLines = lightTicks;
-  // for (let exp = 0; exp <= maxExponent; exp++) {
-  //   horizontalLines.push(5 * Math.pow(10, exp));
-  // }
 
 
   // Create the SVG container.
@@ -122,9 +91,6 @@
     .attr('height', height)
     .attr('viewBox', [0, 0, width, height])
     .attr('style', 'max-width: 100%; height: auto;');
-
-  // Remove existing elements to avoid duplication
-  // svg.selectAll('*').remove();
 
   // Add background rectangles for each exponent group
   for (let exp = 0; exp <= maxExponent; exp++) {
@@ -165,14 +131,6 @@
     )
     .call((g) => g.select('.domain').remove()); // This line removes the vertical domain line of the grid
 
-  // Add the x-axis and label.
-  const xAxis = svg
-    .append('g')
-    .attr('transform', `translate(0,${height - marginBottom})`)
-    .call(d3.axisBottom(x).tickSizeOuter(0))
-    .selectAll('.tick text')
-    .classed('strongText', true);
-
   // Strong ticks left.
   svg
     .append('g')
@@ -181,7 +139,7 @@
       d3
         .axisLeft(y)
         .tickValues(strongTicks)
-        .tickFormat((d) => scaleY(d))
+        .tickFormat(d3.format("~s"))
         .tickSize(4),
     )
     .selectAll('.tick text')
@@ -196,7 +154,7 @@
       d3
         .axisLeft(y)
         .tickValues(lightTicks)
-        .tickFormat((d) => scaleY(d))
+        .tickFormat(d3.format("~s"))
         .tickSize(4),
     )
     .selectAll('.tick text')
@@ -211,7 +169,7 @@
       d3
         .axisRight(y)
         .tickValues(strongTicks)
-        .tickFormat((d) => scaleY(d))
+        .tickFormat(d3.format("~s"))
         .tickSize(4),
     )
     .selectAll('.tick text')
@@ -226,7 +184,7 @@
       d3
         .axisRight(y)
         .tickValues(lightTicks)
-        .tickFormat((d) => scaleY(d))
+        .tickFormat(d3.format("~s"))
         .tickSize(4),
     )
     .selectAll('.tick text')
@@ -266,5 +224,5 @@
     .call(d3.axisRight(y).tickValues(logTicks).tickFormat('').tickSize(4));
 
   // Append the SVG element.
-  container.append(svg.node());
+  window["container"].append(svg.node());
 </script>

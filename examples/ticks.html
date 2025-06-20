@@ -9,7 +9,6 @@
   // Declare the chart dimensions and margins.
   const width = 1024;
   const height = 100;
-  const marginTop = 20;
   const marginRight = 20;
   const marginBottom = 30;
   const marginLeft = 40;
@@ -39,22 +38,18 @@
     .style('text-anchor', 'end')
     .attr('dx', '-.8em')
     .attr('dy', '.15em')
-    .attr('transform', function (d) {
-      return 'rotate(-40)';
-    });
+    .attr('transform', 'rotate(-40)');
 
   svg
     .append('g')
     .attr('transform', `translate(0,${height - 3 * marginBottom})`)
-    .call(d3.axisBottom(xLog))
+  .call(d3.axisBottom(xLog).ticks(15))
     .selectAll('text')
     .style('text-anchor', 'end')
     .attr('dx', '-.8em')
     .attr('dy', '.15em')
-    .attr('transform', function (d) {
-      return 'rotate(-40)';
-    });
+    .attr('transform', 'rotate(-40)');
 
   // Append the SVG element.
-  container.append(svg.node());
+  window["container"].append(svg.node());
 </script>

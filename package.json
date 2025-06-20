@@ -16,8 +16,6 @@
   },
   "module": "src/index.js",
   "main": "src/index.js",
-  "jsdelivr": "dist/d3-eplusm.min.js",
-  "unpkg": "dist/d3-eplusm.min.js",
   "exports": {
     "umd": "./dist/d3-eplusm.min.js",
     "default": "./src/index.js"

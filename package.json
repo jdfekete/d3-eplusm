@@ -22,6 +22,7 @@
     "umd": "./dist/d3-eplusm.min.js",
     "default": "./src/index.js"
   },
+  "sideEffects": false,
   "author": {
     "name": "Jean-Daniel Fekete",
     "url": "https://www.aviz.fr/~fekete"
@@ -31,7 +32,7 @@
       "name": "Katerina Batziakoudi",
       "url": "https://batziakoudi.com/"
     }
-  ]
+  ],
   "scripts": {
     "build": "rollup -c",
     "pretest": "yarn build",

@@ -9,7 +9,8 @@ const config = {
     name: "d3-eplusm",
     format: "umd",
     indent: false,
-    extend: true
+    extend: true,
+    banner: `// ${meta.homepage} v${meta.version}`
   },
   plugins: []
 };

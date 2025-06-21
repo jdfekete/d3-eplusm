@@ -14,6 +14,8 @@ npm i d3-eplusm
 
 ## API
 
+## EplusM Scale
+
 Like all the quantitative scales of d3, d3-eplusm can be used like this:
 ```
 const x1 = scaleEplusM()
@@ -24,3 +26,50 @@ const x1 = scaleEplusM()
 It provides the usual methods, such as `ticks()` and `nice()`.
 In addition, you can also specify the number of tick values you want using the `goodTicks()` method.
 It takes either a number of tick labels to show, between 1 and 9, or an array of tick units to show, such as `goodTicks([1, 5])` (equivalent to `goodTicks(2)` or simply `goodTicks`
+
+## Bricks
+
+The library provide helpers function to display `Bricks`. It requires the toplevel function `bricksEplusM`:
+
+``` javascript
+import { bricksEplusM } from 'd3-eplusm';
+```
+
+The library defines the following functions:
+
+- `bricks(brickColor)` returns an object to manage the bricks.
+- `bricks.declarePatterns(svg)` takes a D3 svg object and adds nine brick pattern declarations, called `#brick1` to `#brick9`.
+- `bricks.barY(scale, v)` returns the bar chart Y value for a bar with value `v`.
+- `bricks.barHeight(scale, v)` returns the bar chart height value for a bar with value `v`.
+- `bricks.brickY(scale, v)` returns the bar chart Y value for the brick part of a bar with value `v`.
+- `bricks.brickHeight(scale, v)` returns the bar chart height value for the brick part of a bar with value `v`.
+- `bricks.brickPattern(v)` returns the brick part pattern id of a bar with value `v`.
+
+It is typically used like this (see `example/bricks.html`):
+
+``` javascript
+...
+  // Add a rect for each bar without the bricks.
+  svg
+    .append('g')
+      .attr('fill', barColor)
+    .selectAll()
+    .data(data)
+    .join('rect')
+      .attr('x', (d) => x(d.Letter))
+      .attr('y', (d) => bricks.barY(y, d.Amount))
+      .attr('height', (d) => bricks.barHeight(y, d.Amount))
+      .attr('width', x.bandwidth());
+
+  // Add the bricks
+  svg
+    .append('g')
+    .selectAll()
+    .data(data)
+      .join('rect')
+        .attr('fill', (d) => bricks.pattern(d.Amount))
+        .attr('x', (d) => x(d.Letter))
+        .attr('y', (d) => bricks.brickY(y, d.Amount))
+        .attr('height', (d) => bricks.brickHeight(y, d.Amount))
+        .attr('width', x.bandwidth());
+```

@@ -6,7 +6,6 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@500&family=Manrope:wght@200..800&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Rubik:ital,wght@0,300..900;1,300..900&display=swap" rel="stylesheet">
-
   body, svg {
     font-family: 'Rubik', serif;
   }
@@ -44,9 +43,11 @@
     stroke-dasharray: 4;
   }
 </style>
+<svg id="mainsvg" xmlns="http://www.w3.org/2000/svg"></svg>
+
 <script type="module">
   import * as d3 from 'https://cdn.jsdelivr.net/npm/d3@7/+esm';
-  import { scaleEplusM } from 'd3-eplusm';
+  import { scaleEplusM, bricksEplusM } from 'd3-eplusm';
 
   const data = await d3.csv('data/omvs-sample.csv');
 
@@ -63,6 +64,8 @@
   const evenBackgroundColor = '#ffffff'; // Background color for even exponents
   const oddBackgroundColor = '#f0f0f0'; // Background color for odd exponents
   const barColor = 'rgb(20, 22, 76)';
+
+  const bricks = bricksEplusM(barColor);
 
   // Declare the x (horizontal position) scale.
   const x = d3
@@ -84,11 +87,13 @@
 
   // Create the SVG container.
   const svg = d3
-    .create('svg')
+    .select('#mainsvg')
     .attr('width', width)
     .attr('height', height)
     .attr('viewBox', [0, 0, width, height])
     .attr('style', 'max-width: 100%; height: auto;');
+
+  bricks.declarePatterns(svg);
 
   // Add background rectangles for each exponent group
   for (let exp = 0; exp <= maxExponent; exp++) {
@@ -189,7 +194,7 @@
     .classed('lightText', true)
     .call((g) => g.select('.domain').remove());
 
-  // Add a rect for each bar.
+  // Add a rect for each bar without the bricks.
   svg
     .append('g')
       .attr('fill', barColor)
@@ -197,11 +202,25 @@
     .data(data)
     .join('rect')
       .attr('x', (d) => x(d.Letter))
-      .attr('y', (d) => y(d.Amount))
-      .attr('height', (d) => y(1) - y(d.Amount))
+      .attr('y', (d) => bricks.barY(y, d.Amount))
+      .attr('height', (d) => bricks.barHeight(y, d.Amount))
       .attr('width', x.bandwidth())
       .append('title')
         .text((d) => d3.format('~s')(d.Amount));
+
+  // Add the bricks
+  svg
+    .append('g')
+    .selectAll()
+    .data(data)
+      .join('rect')
+        .attr('fill', (d) => bricks.pattern(d.Amount))
+        .attr('x', (d) => x(d.Letter))
+        .attr('y', (d) => bricks.brickY(y, d.Amount))
+        .attr('height', (d) => bricks.brickHeight(y, d.Amount))
+        .attr('width', x.bandwidth())
+        .append('title')
+          .text((d) => d3.format('~s')(d.Amount));
 
   svg
     .append('text')

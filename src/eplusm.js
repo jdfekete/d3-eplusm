@@ -67,8 +67,8 @@ export function eplusm(transform) {
     return scale;
   }
 
-  scale.base = function (_) {
-    return arguments.length ? ((base = +_), rescale()) : base;
+  scale.base = function () {
+    return base;
   };
 
   scale.domain = function (_) {
@@ -84,7 +84,7 @@ export function eplusm(transform) {
     if (r) [u, v] = [v, u];
 
     //let i = pow10(Math.floor(Math.log10(u)));
-    let j = pow10(Math.floor(Math.log10(v)));
+    const j = pow10(Math.floor(Math.log10(v))+1);
 
     let n =
       order == null
@@ -95,7 +95,7 @@ export function eplusm(transform) {
     let ticks = [];
     for (let k of n) {
       let i = pow10(Math.floor(Math.log10(u)));
-      while (i <= j) {
+      while (i < j) {
         ticks.push(i * k);
         i *= 10;
       }

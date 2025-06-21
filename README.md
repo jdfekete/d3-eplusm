@@ -29,7 +29,12 @@ It takes either a number of tick labels to show, between 1 and 9, or an array of
 
 ## Bricks
 
-The library provide helpers function to display `Bricks`. It requires the toplevel function `bricksEplusM`:
+The library provide helpers function to display `Bricks`. An EplusM bar chart with Bricks looks like this:
+![](./bricks.svg)
+
+
+
+It requires the toplevel function `bricksEplusM`:
 
 ``` javascript
 import { bricksEplusM } from 'd3-eplusm';

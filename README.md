@@ -59,7 +59,7 @@ import { bricksEplusM } from 'd3-eplusm';
 
 The library defines the following functions:
 
-- `bricks(brickColor)` returns an object to manage the bricks.
+- `const bricks = bricksEplusM(brickColor)` returns an object to manage the bricks.
 - `bricks.declarePatterns(svg)` takes a D3 svg object and adds nine brick pattern declarations, called `#brick1` to `#brick9`.
 - `bricks.barY(scale, v)` returns the bar chart Y value for a bar with value `v`.
 - `bricks.barHeight(scale, v)` returns the bar chart height value for a bar with value `v`.

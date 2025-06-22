@@ -15,7 +15,21 @@ In JavaScript development, you can add the library in your `package.json` file w
 npm i d3-eplusm
 ```
 
+You can also use it directly from `unpkg.com` by adding this line on your html file (see `examples/ticks-cdn.html`):
+
+``` html
+<script type="module">
+  import * as d3 from 'https://cdn.jsdelivr.net/npm/d3@7/+esm';
+  import { scaleEplusM, bricksEplusM } from 'https://unpkg.com/d3-eplusm?module';
+...
+</script
+```
+
+You can also use `d3-eplusm` in Observable, by using `scaleEplusM = require("d3-eplusm@0.0.6-dev")` as shown is [this example](https://observablehq.com/d/3e0c87451c4eeec0).
+
 ## API
+
+`d3-eplusm` provides two API: the EplusM scale using the d3 scale API, and a **Bricks** API to visualize bar charts using the **Bricks** encoding. 
 
 ## EplusM Scale
 

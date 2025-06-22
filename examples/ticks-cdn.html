@@ -1,0 +1,55 @@
+<!doctype html>
+<meta charset="utf-8" />
+<title>Tick for an EplusM scale</title>
+<div id="container"></div>
+<script type="module">
+  import * as d3 from 'https://cdn.jsdelivr.net/npm/d3@7/+esm';
+  import { scaleEplusM, bricksEplusM } from 'https://unpkg.com/d3-eplusm?module';
+
+  // Declare the chart dimensions and margins.
+  const width = 1024;
+  const height = 100;
+  const marginRight = 20;
+  const marginBottom = 30;
+  const marginLeft = 40;
+
+  // Declare the x (horizontal position) scale.
+  const xEplusM = scaleEplusM()
+    .domain([1, 1e6])
+    .range([marginLeft, width - marginRight]);
+
+  // Can generate ticks like this
+  // const logTicks = x1.goodTicks();
+
+  const xLog = d3
+    .scaleLog()
+    .domain([1, 1e6])
+    .range([marginLeft, width - marginRight]);
+
+  // Create the SVG container.
+  const svg = d3.create('svg').attr('width', width).attr('height', height);
+
+  // Add the x-axis.
+  svg
+    .append('g')
+    .attr('transform', `translate(0,${height - marginBottom})`)
+  .call(d3.axisBottom(xEplusM).ticks(15, "s"))
+    .selectAll('text')
+    .style('text-anchor', 'end')
+    .attr('dx', '-.8em')
+    .attr('dy', '.15em')
+    .attr('transform', 'rotate(-40)');
+
+  svg
+    .append('g')
+    .attr('transform', `translate(0,${height - 3 * marginBottom})`)
+  .call(d3.axisBottom(xLog).ticks(15))
+    .selectAll('text')
+    .style('text-anchor', 'end')
+    .attr('dx', '-.8em')
+    .attr('dy', '.15em')
+    .attr('transform', 'rotate(-40)');
+
+  // Append the SVG element.
+  window["container"].append(svg.node());
+</script>

@@ -15,7 +15,7 @@ In JavaScript development, you can add the library in your `package.json` file w
 npm i d3-eplusm
 ```
 
-You can also use it directly from `unpkg.com` by adding this line on your html file (see `examples/ticks-cdn.html`):
+You can also use it directly from `unpkg.com` by adding this line to your HTML file (see `examples/ticks-cdn.html`):
 
 ``` html
 <script type="module">
@@ -46,7 +46,7 @@ It takes either a number of tick labels to show, between 1 and 9, or an array of
 
 ## Bricks
 
-The library provide helpers function to display `Bricks`. An EplusM bar chart with Bricks looks like this:
+The library provides helper functions to display `Bricks`. An EplusM bar chart with Bricks looks like this:
 ![](./bricks.svg)
 
 

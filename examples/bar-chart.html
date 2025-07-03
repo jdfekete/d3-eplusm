@@ -1,14 +1,18 @@
 <!doctype html>
 <meta charset="utf-8" />
 <title>Bar Chart using the EplusM scale</title>
-<div id="container"></div>
-<style type="text/css">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@500&family=Manrope:wght@200..800&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Rubik:ital,wght@0,300..900;1,300..900&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@500&family=Manrope:wght@200..800&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Rubik:ital,wght@0,300..900;1,300..900&display=swap" rel="stylesheet">
 
+
+<style>
+  
   body, svg {
     font-family: 'Rubik', serif;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
   }
 
   .grid {
@@ -44,6 +48,9 @@
     stroke-dasharray: 4;
   }
 </style>
+
+<div id="container"></div>
+
 <script type="module">
   import * as d3 from 'https://cdn.jsdelivr.net/npm/d3@7/+esm';
   import { scaleEplusM } from 'd3-eplusm';

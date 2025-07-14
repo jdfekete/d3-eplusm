@@ -28,7 +28,6 @@ function transformEpluM(x) {
 }
 
 function transformLin(x) {
-  if (x === 0) return 0;
   const exponent = Math.trunc(x),
     mantissa = (x - exponent) * 9 + 1;
   const lin = roundat(mantissa * pow10(exponent), 5);

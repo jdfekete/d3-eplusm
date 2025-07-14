@@ -82,7 +82,7 @@ it('eplusm.range(…) does not coerce values to numbers', () => {
 it('eplusm(x) does not clamp by default', () => {
   const x = scaleEplusM();
   assert.strictEqual(x.clamp(), false);
-  assertInDelta(x(0.5), -0.055555, 1e-3);
+  assertInDelta(x(0.5), -0.055555, 1e-5);
   assertInDelta(x(15), 1.055555, 1e-3);
 });
 
@@ -108,50 +108,20 @@ it('eplusm.clamp(true).invert(y) clamps to the range', () => {
   assertInDelta(x.invert(1.5), 1);
 });
 
-/*
-it('log(x) maps a number x to a number y', () => {
+it('eplusm(x) maps a number x to a number y', () => {
   const x = scaleEplusM().domain([1, 2]);
-  assertInDelta(x(0.5), -1.0);
   assertInDelta(x(1.0), 0.0);
-  assertInDelta(x(1.5), 0.5849625);
+  assertInDelta(x(1.5), 0.5);
   assertInDelta(x(2.0), 1.0);
-  assertInDelta(x(2.5), 1.3219281);
+  assertInDelta(x(2.5), 1.5);
 });
 
 it('eplusm.invert(y) maps a number y to a number x', () => {
   const x = scaleEplusM().domain([1, 2]);
-  assertInDelta(x.invert(-1.0), 0.5);
   assertInDelta(x.invert(0.0), 1.0);
-  assertInDelta(x.invert(0.5849625), 1.5);
+  assertInDelta(x.invert(0.5), 1.5);
   assertInDelta(x.invert(1.0), 2.0);
-  assertInDelta(x.invert(1.3219281), 2.5);
-});
-
-it('eplusm.invert(y) coerces y to number', () => {
-  const x = scaleEplusM().range(['0', '2']);
-  assertInDelta(x.invert('1'), 3.1622777);
-  x.range([new Date(1990, 0, 1), new Date(1991, 0, 1)]);
-  assertInDelta(x.invert(new Date(1990, 6, 2, 13)), 3.1622777);
-  x.range(['#000', '#fff']);
-  assert(Number.isNaN(x.invert('#999')));
-});
-
-it('eplusm.base(b) sets the log base, changing the ticks', () => {
-  const x = scaleEplusM().domain([1, 32]);
-  assert.deepStrictEqual(x.base(2).ticks().map(x.tickFormat()), [
-    '1',
-    '2',
-    '4',
-    '8',
-    '16',
-    '32',
-  ]);
-  assert.deepStrictEqual(x.base(Math.E).ticks().map(x.tickFormat()), [
-    '1',
-    '2.71828182846',
-    '7.38905609893',
-    '20.0855369232',
-  ]);
+  assertInDelta(x.invert(1.5), 2.5);
 });
 
 it('eplusm.nice() nices the domain, extending it to powers of ten', () => {
@@ -171,25 +141,11 @@ it('eplusm.nice() nices the domain, extending it to powers of ten', () => {
   assertInDelta(x(100), 1);
 });
 
-it('eplusm.nice() works on degenerate domains', () => {
-  const x = scaleEplusM().domain([0, 0]).nice();
-  assert.deepStrictEqual(x.domain(), [0, 0]);
-  x.domain([0.5, 0.5]).nice();
-  assert.deepStrictEqual(x.domain(), [0.1, 1]);
-});
-
-it('eplusm.nice() on a polylog domain only affects the extent', () => {
-  const x = scaleEplusM().domain([1.1, 1.5, 10.9]).nice();
-  assert.deepStrictEqual(x.domain(), [1, 1.5, 100]);
-  x.domain([-123.1, -1.5, -0.5]).nice();
-  assert.deepStrictEqual(x.domain(), [-1000, -1.5, -0.1]);
-});
-
 it('eplusm.copy() isolates changes to the domain', () => {
   const x = scaleEplusM(),
     y = x.copy();
   x.domain([10, 100]);
-  assert.deepStrictEqual(y.domain(), [1, 10]);
+  assert.deepStrictEqual(y.domain(), [0, 10]);
   assertInDelta(x(10), 0);
   assertInDelta(y(1), 0);
   y.domain([100, 1000]);
@@ -228,15 +184,7 @@ it('eplusm.copy() isolates changes to the range', () => {
   assert.deepStrictEqual(y.range(), [2, 3]);
 });
 
-it('eplusm.copy() isolates changes to the interpolator', () => {
-  const x = scaleEplusM().range(['red', 'blue']),
-    y = x.copy();
-  x.interpolate(interpolateHsl);
-  assert.strictEqual(x(5), 'rgb(154, 0, 255)');
-  assert.strictEqual(y(5), 'rgb(77, 0, 178)');
-  assert.strictEqual(y.interpolate(), interpolate);
-});
-
+/*
 it('eplusm.copy() isolates changes to clamping', () => {
   const x = scaleEplusM().clamp(true),
     y = x.copy();

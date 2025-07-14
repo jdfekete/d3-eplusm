@@ -181,7 +181,7 @@ it('eplusm.copy() isolates changes to the range', () => {
   assertInDelta(x.invert(2), 10);
   assertInDelta(y.invert(2), 1);
   assert.deepStrictEqual(x.range(), [1, 2]);
-  //assert.deepStrictEqual(y.range(), [2, 3]);
+  assert.deepStrictEqual(y.range(), [2, 3]);
 });
 
 /*

@@ -1,5 +1,5 @@
 # Implementation of the EpluM scale for d3.
-[![JS Tests](https://github.com/jdfekete/d3-eplusm/actions/workflows/node.js.yml/badge.svg?branch=master&event=push)](https://github.com/jdfekete/d3-eplusm/actions/workflows/node.js.yml)
+[![JS Tests](https://github.com/jdfekete/d3-eplusm/actions/workflows/node.js.yml/badge.svg?branch=main&event=push)](https://github.com/jdfekete/d3-eplusm/actions/workflows/node.js.yml)
 
 D3 provides several scales in [d3-scale](https://github.com/d3/d3-scale): quantitative, ordered, and categorical. EplusM is a quantitative scale, a good alternative to the logarithmic scale for values with orders of magnitude varying widely.
 

@@ -48,7 +48,7 @@ It takes either a number of tick labels to show, between 1 and 9, or an array of
 ## Bricks
 
 The library provides helper functions to display `Bricks`. An EplusM bar chart with Bricks looks like this:
-![](./bricks.png)
+![](./bricks.svg)
 
 
 

@@ -1,56 +1,11 @@
-<!doctype html>
-<meta charset="utf-8" />
-<title>Bar Chart using the EplusM scale</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@500&family=Manrope:wght@200..800&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Rubik:ital,wght@0,300..900;1,300..900&display=swap" rel="stylesheet">
-
-
-<style>
-  
-  body, svg {
-    font-family: 'Rubik', serif;
-    margin: 0;
-    padding: 0;
-    overflow: hidden;
-  }
-
-  .grid {
-    color: black;
-    opacity: 0.5;
-    stroke-width: 0.5px;
-  }
-
-  .grid-strong {
-    color: rgb(20, 22, 76);
-    stroke-width: 1px;
-  }
-
-  .strongText {
-    font-size: 16px;
-    font-weight: bold;
-    color: rgb(20, 22, 76);
-  }
-
-  .strongSSBText {
-    font-size: 16px;
-    font-weight: bold;
-  }
-
-  .lightText {
-    font-size: 16px;
-    color: grey;
-  }
-
-  .dashed-line {
-    stroke: grey;
-    stroke-width: 2;
-    stroke-dasharray: 4;
-  }
-</style>
-
-<div id="container"></div>
-
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Bar Chart using the EplusM scale</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@500&family=Manrope:wght@200..800&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Rubik:ital,wght@0,300..900;1,300..900&display=swap" rel="stylesheet">
 <script type="module">
   import * as d3 from 'https://cdn.jsdelivr.net/npm/d3@7/+esm';
   import { scaleEplusM } from 'd3-eplusm';
@@ -91,7 +46,7 @@
 
   // Create the SVG container.
   const svg = d3
-    .create('svg')
+     .select('#barchartsvg')
     .attr('width', width)
     .attr('height', height)
     .attr('viewBox', [0, 0, width, height])
@@ -233,3 +188,76 @@
   // Append the SVG element.
   window['container'].append(svg.node());
 </script>
+</head>
+  <body>
+  <div id="container">
+    <svg id="barchartsvg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+      <style>
+  svg {
+    font-family: 'Rubik', serif;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+  }
+
+  .grid {
+    color: black;
+    opacity: 0.5;
+    stroke-width: 0.5px;
+  }
+
+  .grid-strong {
+    color: rgb(20, 22, 76);
+    stroke-width: 1px;
+  }
+
+  .strongText {
+    font-size: 16px;
+    font-weight: bold;
+    color: rgb(20, 22, 76);
+  }
+
+  .strongSSBText {
+    font-size: 16px;
+    font-weight: bold;
+  }
+
+  .lightText {
+    font-size: 16px;
+    color: grey;
+  }
+
+  .dashed-line {
+    stroke: grey;
+    stroke-width: 2;
+    stroke-dasharray: 4;
+  }
+</style>
+    </svg>
+
+    <script>
+function saveSvg(id, name) {
+const svgEl = document.getElementById(id);
+  svgEl.setAttribute("xmlns", "http://www.w3.org/2000/svg");
+  var svgData = svgEl.outerHTML;
+  var preface = '<?xml version="1.0" standalone="no"?>\r\n';
+  var svgBlob = new Blob([preface, svgData], {type:"image/svg+xml;charset=utf-8"});
+  var svgUrl = URL.createObjectURL(svgBlob);
+  var downloadLink = document.createElement("a");
+  downloadLink.href = svgUrl;
+  downloadLink.download = name;
+  document.body.appendChild(downloadLink);
+  downloadLink.click();
+  document.body.removeChild(downloadLink);
+}
+
+window.addEventListener(
+      'keypress',
+      function (evt) {
+        if (evt.code == "KeyS")
+          saveSvg('barchartsvg', 'bar-chart.svg')
+});
+    </script>
+</div>
+</body>
+</html>

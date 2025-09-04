@@ -1,6 +1,6 @@
 {
   "name": "d3-eplusm",
-  "version": "0.0.6-dev",
+  "version": "0.0.8-dev",
   "description": "Exponent plus Mantissa scale for d3.",
   "keywords": [
     "d3",

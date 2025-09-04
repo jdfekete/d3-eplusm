@@ -1,16 +1,18 @@
 # Implementation of the EpluM scale for d3.
+[![JS Tests](https://github.com/jdfekete/d3-eplusm/actions/workflows/node.js.yml/badge.svg?branch=main&event=push)](https://github.com/jdfekete/d3-eplusm/actions/workflows/node.js.yml)
 
-D3 provides several scales in [d3-scale](https://github.com/d3/d3-scale): quantitative, ordered, and categorical. EplusM is a quantitative scale, a good alternative to the logarithmic scale for values with orders of magnitude varying widely.
+D3 provides several scales in [d3-scale](https://github.com/d3/d3-scale): quantitative, ordered, and categorical. EplusM is a quantitative scale, an effective alternative to the logarithmic scale for values that span over multiple orders of magnitude.
 
 ![](./log-eplusm.png)
 
 
-See this publication for details: 
-Katerina Batziakoudi, Florent Cabric, Stéphanie Rey, and Jean-Daniel Fekete. 2025. Lost in Magnitudes: Exploring Visualization Designs for Large Value Ranges. In Proceedings of the 2025 CHI Conference on Human Factors in Computing Systems (CHI '25). Association for Computing Machinery, New York, NY, USA, Article 1170, 1–18. https://doi.org/10.1145/3706598.3713487
+See these publications for details: 
+- Katerina Batziakoudi, Stéphanie Rey, Jean-Daniel Fekete. Beyond Log Scales: Toward Cognitively Informed Bar Charts for Orders of Magnitude Values. IEEE Transactions on Visualization and Computer Graphics (TVCG). 2026 ⟨hal-05171203⟩
+- Katerina Batziakoudi, Florent Cabric, Stéphanie Rey, and Jean-Daniel Fekete. 2025. Lost in Magnitudes: Exploring Visualization Designs for Large Value Ranges. In Proceedings of the 2025 CHI Conference on Human Factors in Computing Systems (CHI '25). Association for Computing Machinery, New York, NY, USA, Article 1170, 1–18. https://doi.org/10.1145/3706598.3713487
 
 ## Using d3-eplusm
 
-In JavaScript development, you can add the library in your `package.json` file with the following command:
+In JavaScript development, you can add the library to your `package.json` file with the following command:
 ```
 npm i d3-eplusm
 ```
@@ -25,7 +27,7 @@ You can also use it directly from `unpkg.com` by adding this line to your HTML f
 </script
 ```
 
-You can also use `d3-eplusm` in Observable, by using `scaleEplusM = require("d3-eplusm@0.0.6-dev")` as shown is [this example](https://observablehq.com/d/3e0c87451c4eeec0).
+You can also use `d3-eplusm` in Observable, by using `scaleEplusM = require("d3-eplusm@0.0.7-dev")` as shown is [this example](https://observablehq.com/d/3e0c87451c4eeec0).
 
 ## API
 
@@ -60,7 +62,7 @@ import { bricksEplusM } from 'd3-eplusm';
 The library defines the following functions:
 
 - `const bricks = bricksEplusM(brickColor)` returns an object to manage the bricks.
-- `bricks.declarePatterns(svg)` takes a D3 svg object and adds nine brick pattern declarations, called `#brick1` to `#brick9`.
+- `bricks.declarePatterns(svg)` takes a D3 svg object and adds ten brick pattern declarations, called `#brick0` to `#brick9`.
 - `bricks.barY(scale, v)` returns the bar chart Y value for a bar with value `v`.
 - `bricks.barHeight(scale, v)` returns the bar chart height value for a bar with value `v`.
 - `bricks.brickY(scale, v)` returns the bar chart Y value for the brick part of a bar with value `v`.

@@ -1,55 +1,108 @@
 <!doctype html>
 <meta charset="utf-8" />
-<title>Tick for an EplusM scale</title>
+<title>EplusM vs Log axes</title>
 <div id="container"></div>
 <script type="module">
   import * as d3 from 'https://cdn.jsdelivr.net/npm/d3@7/+esm';
   import { scaleEplusM } from 'd3-eplusm';
 
-  // Declare the chart dimensions and margins.
   const width = 1024;
-  const height = 100;
+  const height = 200;
   const marginRight = 20;
-  const marginBottom = 30;
-  const marginLeft = 40;
+  const marginBottom = 34;
+  const marginLeft = 50;
+  const axisGap = 100;
 
-  // Declare the x (horizontal position) scale.
   const xEplusM = scaleEplusM()
     .domain([1, 1e6])
     .range([marginLeft, width - marginRight]);
 
-  // Can generate ticks like this
-  // const logTicks = x1.goodTicks();
-
-  const xLog = d3
-    .scaleLog()
+  const xLog = d3.scaleLog()
     .domain([1, 1e6])
     .range([marginLeft, width - marginRight]);
 
-  // Create the SVG container.
+  const tickVals = [];
+  const [u, v] = xLog.domain();
+  const eMin = Math.floor(Math.log10(u));
+  const eMax = Math.ceil(Math.log10(v));
+  for (let e = eMin; e <= eMax; e++) {
+    for (let m = 1; m <= 9; m++) {
+      const val = m * Math.pow(10, e);
+      if (val >= u && val <= v) tickVals.push(val);
+    }
+  }
+
   const svg = d3.create('svg').attr('width', width).attr('height', height);
 
-  // Add the x-axis.
-  svg
-    .append('g')
+  // emphasize ticks where mantissa ≈ 1
+  function emphasizeMantissa1Ticks(selection) {
+    selection.selectAll(".tick").each(function(d) {
+      const exp = Math.trunc(Math.log10(d));
+      const mantissa = d / Math.pow(10, exp);
+      if (Math.abs(mantissa - 1) < 1e-6) {
+        d3.select(this).select("line")
+          .attr("stroke-width", 2.5)
+          .attr("stroke", "black")
+          .attr("y2", 10);
+        d3.select(this).select("text")
+          .attr("font-weight", 600)
+          .attr("color", "black");
+      } else {
+         d3.select(this).select("line")
+          .attr("stroke-width", 1)
+          .attr("stroke", "grey")
+          .attr("y2", 8);
+        d3.select(this).select("text")
+          .attr("font-weight", 400)
+          .attr("color", "grey");
+      }
+    });
+  }
+
+  // EplusM axis (bottom)
+  const gE = svg.append('g')
+    .attr('class', 'axis axis--eplusm')
     .attr('transform', `translate(0,${height - marginBottom})`)
-  .call(d3.axisBottom(xEplusM).ticks(15, "s"))
-    .selectAll('text')
-    .style('text-anchor', 'end')
-    .attr('dx', '-.8em')
-    .attr('dy', '.15em')
-    .attr('transform', 'rotate(-40)');
+    .call(d3.axisBottom(xEplusM).ticks(15, "s"))
+    .call(emphasizeMantissa1Ticks);
 
-  svg
-    .append('g')
-    .attr('transform', `translate(0,${height - 3 * marginBottom})`)
-  .call(d3.axisBottom(xLog).ticks(15))
-    .selectAll('text')
-    .style('text-anchor', 'end')
-    .attr('dx', '-.8em')
-    .attr('dy', '.15em')
-    .attr('transform', 'rotate(-40)');
+  gE.selectAll('text')
+    .style('text-anchor', 'center')
+    .attr('dy', '1.2em')
 
-  // Append the SVG element.
-  window["container"].append(svg.node());
+  // Log axis (above)
+  const gL = svg.append('g')
+    .attr('class', 'axis axis--log')
+    .attr('transform', `translate(0,${height - marginBottom - axisGap})`)
+    .call(
+        d3.axisBottom(xLog)
+          .tickValues(tickVals)
+          .tickFormat(d => {
+            const exp = Math.trunc(Math.log10(d));
+            const mantissa = d / Math.pow(10, exp);
+            return  (Math.abs(mantissa - 1) < 1e-6 || Math.abs(mantissa - 5) < 1e-6)  ? d3.format("~s")(d) : "";
+          })
+      )
+      .call(emphasizeMantissa1Ticks);
+
+  gL.selectAll('text')
+    .style('text-anchor', 'center')
+    .attr('dy', '1.2em')
+
+
+  // Labels so you can tell which is which
+  svg.append("text")
+    .attr("x", marginLeft)
+    .attr("y", height - marginBottom - axisGap - 16)
+    .attr("font-size", 14)
+    .text("Log scale");
+
+  svg.append("text")
+    .attr("x", marginLeft)
+    .attr("y", height - marginBottom - 16)
+    .attr("font-size", 14)
+    .text("EplusM scale");
+
+  // IMPORTANT: append using getElementById (not window["container"])
+  document.getElementById("container").append(svg.node());
 </script>

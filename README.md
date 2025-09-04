@@ -2,7 +2,7 @@
 
 D3 provides several scales in [d3-scale](https://github.com/d3/d3-scale): quantitative, ordered, and categorical. EplusM is a quantitative scale, a good alternative to the logarithmic scale for values with orders of magnitude varying widely.
 
-![](./ticks.svg)
+![](./log-eplusm.png)
 
 
 See this publication for details: 

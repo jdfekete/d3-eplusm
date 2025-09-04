@@ -15,29 +15,29 @@ function roundat(x, prec) {
   return Math.round((x + Number.EPSILON) * decimals) / decimals;
 }
 
-function transformEpluM(x) {
+function transformEplusM(x) {
   if (x === 0) {
-    //console.log(`transformEpluM(${x}) = 0`);
+    //console.log(`transformEplusM(${x}) = 0`);
     return 0;
   }
-  const exponent = Math.trunc(Math.log10(x)),
-    mantissa = x / pow10(exponent);
+  const exponent = Math.trunc(Math.log10(x))
+  const mantissa = x / pow10(exponent);
   const eplusm = exponent + (mantissa - 1) / 9;
-  //console.log(`transformEpluM(${x}) = ${eplusm}`);
+  //console.log(`transformEplusM(${x}) = ${eplusm}`);
   return eplusm;
 }
 
 function transformLin(x) {
   if (x === 0) return 0;
-  const exponent = Math.trunc(x),
-    mantissa = (x - exponent) * 9 + 1;
+  const exponent = Math.trunc(x)
+  const mantissa = (x - exponent) * 9 + 1;
   const lin = roundat(mantissa * pow10(exponent), 5);
   //console.log(`transformLin(${x}) = ${lin}`);
   return lin;
 }
 
-function transformEpluMn(x) {
-  return -transformEpluM(-x);
+function transformEplusMn(x) {
+  return -transformEplusM(-x);
 }
 
 function transformLinn(x) {
@@ -49,7 +49,7 @@ function reflect(f) {
 }
 
 export function eplusm(transform) {
-  const scale = transform(transformEpluM, transformLin);
+  const scale = transform(transformEplusM, transformLin);
   const domain = scale.domain;
   let base = 10;
   let logs;
@@ -57,12 +57,12 @@ export function eplusm(transform) {
   let pows;
 
   function rescale() {
-    (logs = transformEpluM), (pows = pow10), (invs = transformLin);
+    (logs = transformEplusM), (pows = pow10), (invs = transformLin);
     if (domain()[0] < 0) {
       (logs = reflect(logs)), (pows = reflect(pows)), (invs = reflect(invs));
-      transform(transformEpluMn, transformLinn);
+      transform(transformEplusMn, transformLinn);
     } else {
-      transform(transformEpluM, transformLin);
+      transform(transformEplusM, transformLin);
     }
     return scale;
   }

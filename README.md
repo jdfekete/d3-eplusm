@@ -7,7 +7,7 @@ D3 provides several scales in [d3-scale](https://github.com/d3/d3-scale): quanti
 
 
 See these publications for details: 
-- Katerina Batziakoudi, Stéphanie Rey, Jean-Daniel Fekete. Beyond Log Scales: Toward Cognitively Informed Bar Charts for Orders of Magnitude Values. Transactions on Visualization and Computer Graphics (TVCG). Ιn Proceedings of IEEE VIS 2025. 2026 ⟨hal-05171203⟩
+- Katerina Batziakoudi, Stéphanie Rey, Jean-Daniel Fekete. Beyond Log Scales: Toward Cognitively Informed Bar Charts for Orders of Magnitude Values. IEEE Transactions on Visualization and Computer Graphics (TVCG). 2026 ⟨hal-05171203⟩
 - Katerina Batziakoudi, Florent Cabric, Stéphanie Rey, and Jean-Daniel Fekete. 2025. Lost in Magnitudes: Exploring Visualization Designs for Large Value Ranges. In Proceedings of the 2025 CHI Conference on Human Factors in Computing Systems (CHI '25). Association for Computing Machinery, New York, NY, USA, Article 1170, 1–18. https://doi.org/10.1145/3706598.3713487
 
 ## Using d3-eplusm

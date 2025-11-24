@@ -27,7 +27,7 @@ You can also use it directly from `unpkg.com` by adding this line to your HTML f
 </script
 ```
 
-You can also use `d3-eplusm` in Observable, by using `scaleEplusM = require("d3-eplusm@0.0.7-dev")` as shown is [this example](https://observablehq.com/d/3e0c87451c4eeec0).
+You can also use `d3-eplusm` in Observable, by using `scaleEplusM = require("d3-eplusm@0.0.7-dev")` as shown is [this example](https://observablehq.com/d/3e0c87451c4eeec0). Katerina Batziakoudi also [hosts a nice demo at Observable](https://observablehq.com/d/7009713cb399741c).
 
 ## API
 
